@@ -1,4 +1,5 @@
 const sql = require('./db.js');
+//promisify将回调风格的函数转换为promise
 const { promisify } = require('util');
 
 const queryAsync = promisify(sql.query).bind(sql);
@@ -13,14 +14,19 @@ class Post {
   }
   static async addPost(newPost, result) {
     try {
-      const res1 = await queryAsync("INSERT INTO post(picture,content,poster) VALUES(?,?,?)",
-        [newPost.picture, newPost.content, newPost.poster]);
+      //获取当前时间
+      const now = new Date();
+      //转化为mysql的DATATIME格式
+      const formattedDateTime = now.toISOString().slice(0, 19).replace('T', ' ');
+
+      const res1 = await queryAsync("INSERT INTO post(picture,content,poster,time_p) VALUES(?,?,?,?)",
+        [newPost.picture, newPost.content, newPost.poster,formattedDateTime]);
       const postId = res1.insertId;
       const res2 = await queryAsync("UPDATE post SET prefix_id=? WHERE id=?",
         ["post" + postId, postId]);
 
       console.log("post added:", { id: postId, ...newPost });
-      result(null, { id: postId, ...newPost });
+      result(null, { id: postId, time_p: formattedDateTime, ...newPost });
     }
     catch (err) {
       console.log(err);
@@ -28,7 +34,17 @@ class Post {
     }
   }
 
-
+  static async getPost(result) {
+    try {
+      const res = await queryAsync("SELECT * FROM post");
+      console.log("post retrieved:", res);
+      result(null, res);
+    }
+    catch (err) {
+      console.log(err);
+      result(err, null);
+    }
+  }
   static async deletePost(postId, deleter, result) {
     try {
       const res1 = await queryAsync("UPDATE post SET deleter=? WHERE id =?",
@@ -46,4 +62,5 @@ class Post {
     }
   }
 }
+//导出Post类，让其他文件可以导入require
 module.exports = Post;

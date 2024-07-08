@@ -5,7 +5,7 @@ module.exports = app => {
 
   router.post('/addPost', posts.addPost);
 
-  router.post('/addPostimg',posts.addPostimg);
+  router.get('/getPost', posts.getPost);
 
   app.use('/api/posts', router);
 }
