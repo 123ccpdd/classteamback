@@ -5,5 +5,7 @@ module.exports = app => {
 
   router.post('/addPost', posts.addPost);
 
+  router.post('/addPostimg',posts.addPostimg);
+
   app.use('/api/posts', router);
 }
