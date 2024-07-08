@@ -36,7 +36,7 @@ class Post {
 
   static async getPost(result) {
     try {
-      const res = await queryAsync("SELECT * FROM post");
+      const res = await queryAsync("SELECT post.*, `teacher`.`name` , `teacher`.`subject`  FROM `post` , `teacher` WHERE post.`poster` = `teacher`.`prefix_id` ");
       console.log("post retrieved:", res);
       result(null, res);
     }
