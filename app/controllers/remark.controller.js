@@ -11,7 +11,7 @@ exports.addRemark = (req, res) => {
     const remark = new Remark(
       {
         content: req.body.content,
-        poster: req.user.prefix_id,
+        post: req.body.post,
         deleter: null
       }
     )
@@ -25,7 +25,7 @@ exports.addRemark = (req, res) => {
         }
         else {
           res.json({
-            message: 'Post added successfully',
+            message: 'Remark added successfully',
             ...data
           })
         }
@@ -38,7 +38,7 @@ exports.addRemark = (req, res) => {
       const data = await Remark.getRemark(req.body.postID);
       if (!data) {
         res.status(400).json({
-            message: "Post ID can not be empty!"
+            message: "Remark ID can not be empty!"
         });
         return;
       }
