@@ -1,3 +1,4 @@
+//module导出定义函数，参数是app
 module.exports = app => {
   const teachers = require('../controllers/teacher.controller.js');
 

@@ -53,6 +53,7 @@ require('./app/routes/admin.routes.js')(app);
 require('./app/routes/post.routes.js')(app);
 require('./app/routes/public.routes.js')(app);
 require('./app/routes/post.routes.js')(app);
+require('./app/routes/remark.routes.js')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

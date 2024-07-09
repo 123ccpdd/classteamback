@@ -6,12 +6,14 @@ const queryAsync = promisify(sql.query).bind(sql);
 
 
 class Post {
+  // 初始化构造函数
   constructor(post) {
     this.picture = post.picture;
     this.content = post.content;
     this.poster = post.poster;
     this.deleter = post.deleter;
   }
+  // 使用async和await可以避免嵌套的.then()和.catch()回调
   static async addPost(newPost, result) {
     try {
       //获取当前时间
