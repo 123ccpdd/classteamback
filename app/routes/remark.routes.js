@@ -5,7 +5,7 @@ module.exports = app =>{
 
     router.post('/addRemark', remark.addRemark);
 
-    router.get('/getRemark', remark.getRemark);
+    router.post('/getRemark', remark.getRemark);
 
     app.use('/api/remarks', router);
     
