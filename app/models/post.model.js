@@ -32,7 +32,7 @@ class Post {
     }
     catch (err) {
       console.log(err);
-      result(err, null);
+      return result;
     }
   }
 
@@ -45,6 +45,19 @@ class Post {
     catch (err) {
       console.log(err);
       result(err, null);
+    }
+  }
+
+  static async getPostdetail(poster){
+    try {
+      const res = await queryAsync("SELECT post.*, `teacher`.`name` , `teacher`.`subject`  FROM `post` , `teacher` WHERE post.`poster` = `teacher`.`prefix_id` AND `post`.`poster` = ?",
+        [poster]);
+      console.log("postdetail retrieved:", res);
+      return res;
+    }
+    catch(err) {
+      console.log(err);
+      return res;
     }
   }
   static async deletePost(postId, deleter, result) {

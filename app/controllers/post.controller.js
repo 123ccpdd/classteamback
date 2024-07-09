@@ -48,3 +48,23 @@ exports.getPost = (req, res) => {
     }
   });
 }
+
+  exports.getPostdetail = async (req, res) => {
+    try {
+      const data = await Post.getPostdetail(req.body.poster);
+      if (!data) {
+        res.status(400).json({
+            message: "Remark ID can not be empty!"
+        });
+        return;
+      }
+      res.json({
+        message: 'Successfully retrieved content',
+        data: data
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message || "Some error occurred while getting the Post."
+      });
+    }
+  };
