@@ -16,7 +16,10 @@ exports.addRemark = (req, res) => {
       }
     )
   
-    Remark.addRemark(remark,
+    const id = req.user.id;
+    const prefix_id = req.user.prefix_id;
+
+    Remark.addRemark(remark,id,
       (err, data) => {
         if (err) {
           res.status(500).json({
@@ -34,8 +37,12 @@ exports.addRemark = (req, res) => {
   }
   
   exports.getRemark = async (req, res) => {
+    
+    const id = req.user.id;
+    const prefix_id = req.user.prefix_id;
+
     try {
-      const data = await Remark.getRemark(req.body.postID);
+      const data = await Remark.getRemark(id,prefix_id,req.body.postID);
       if (!data) {
         res.status(400).json({
             message: "Remark ID can not be empty!"
@@ -43,12 +50,12 @@ exports.addRemark = (req, res) => {
         return;
       }
       res.json({
-        message: 'Successfully retrieved content',
+        message: 'Successfully retrieved remark',
         data: data
       });
     } catch (err) {
       res.status(500).json({
-        message: err.message || "Some error occurred while getting the Post."
+        message: err.message || "Some error occurred while getting the Remark."
       });
     }
   };

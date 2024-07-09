@@ -23,7 +23,7 @@ class Public {
         const res1 = await queryAsync("SELECT * FROM teacher WHERE id =?", id);
         const res2 = await queryAsync("SELECT * FROM class WHERE master =?", id);
         if (res2.length) {
-          ismaster = 1;
+          ismaster = 1;21
         }
         const res3 = await queryAsync("SELECT * FROM class WHERE id=(SELECT class FROM teacher WHERE id=?)", id);
         const res4 = await queryAsync("SELECT * FROM school WHERE id=(SELECT school FROM class WHERE id=(SELECT class FROM teacher WHERE id=?))", id);
